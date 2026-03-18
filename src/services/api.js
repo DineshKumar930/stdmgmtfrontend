@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = 'https://stdmgmtback1.onrender.com"';
+const API_BASE_URL = 'https://stdmgmtback1.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,60 +10,49 @@ const api = axios.create({
 });
 
 export const studentService = {
-  // Get all students
   getAllStudents: async () => {
     try {
-      const response = await api.get('/students');
+      const response = await api.get('/api/students');
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
-
-  // Get student by ID
   getStudentById: async (id) => {
     try {
-      const response = await api.get(`/students/${id}`);
+      const response = await api.get(`/api/students/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
-
-  // Create new student
   createStudent: async (student) => {
     try {
-      const response = await api.post('/students', student);
+      const response = await api.post('/api/students', student);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
-
-  // Update student
   updateStudent: async (id, student) => {
     try {
-      const response = await api.put(`/students/${id}`, student);
+      const response = await api.put(`/api/students/${id}`, student);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
-
-  // Delete student
   deleteStudent: async (id) => {
     try {
-      await api.delete(`/students/${id}`);
+      await api.delete(`/api/students/${id}`);
       return true;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
-
-  // Search students by name
   searchStudents: async (name) => {
     try {
-      const response = await api.get(`/students/search?name=${name}`);
+      const response = await api.get(`/api/students/search?name=${name}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
