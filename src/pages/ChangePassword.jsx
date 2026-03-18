@@ -8,7 +8,6 @@ const ChangePassword = () => {
     newPassword: "",
     confirmPassword: "",
   });
-
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
@@ -19,7 +18,6 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { oldPassword, newPassword, confirmPassword } = formData;
 
     if (!oldPassword || !newPassword || !confirmPassword) {
@@ -27,13 +25,11 @@ const ChangePassword = () => {
       setMessageType("error");
       return;
     }
-
     if (newPassword.length < 6) {
       setMessage("New password must be at least 6 characters.");
       setMessageType("error");
       return;
     }
-
     if (newPassword !== confirmPassword) {
       setMessage("New password and confirm password do not match.");
       setMessageType("error");
@@ -41,20 +37,17 @@ const ChangePassword = () => {
     }
 
     try {
-      const username = localStorage.getItem("adminUsername"); // login ke time save hona chahiye
-
+      const username = localStorage.getItem("adminUsername");
       const response = await axios.put(
-        "http://localhost:8080/api/admin/change-password",
+        "https://stdmgmtback1.onrender.com/api/admin/change-password",
         {
           username,
           oldPassword,
           newPassword,
         }
       );
-
       setMessage(response.data?.message || "Password changed successfully!");
       setMessageType("success");
-
       setFormData({
         oldPassword: "",
         newPassword: "",
@@ -66,17 +59,13 @@ const ChangePassword = () => {
       console.error("Change password error:", error);
     }
   };
-  const username = localStorage.getItem("adminUsername");
-console.log("Username:", username); // What does this print?
 
   return (
     <div className="change-password-page">
       <div className="change-password-card">
         <h2>Change Password</h2>
         <p className="subtitle">Update your account password securely</p>
-
         {message && <div className={`message ${messageType}`}>{message}</div>}
-
         <form onSubmit={handleSubmit} className="change-password-form">
           <div className="form-group">
             <label>Current Password</label>
@@ -88,7 +77,6 @@ console.log("Username:", username); // What does this print?
               onChange={handleChange}
             />
           </div>
-
           <div className="form-group">
             <label>New Password</label>
             <input
@@ -99,7 +87,6 @@ console.log("Username:", username); // What does this print?
               onChange={handleChange}
             />
           </div>
-
           <div className="form-group">
             <label>Confirm New Password</label>
             <input
@@ -110,7 +97,6 @@ console.log("Username:", username); // What does this print?
               onChange={handleChange}
             />
           </div>
-
           <button type="submit" className="change-btn">
             Change Password
           </button>
