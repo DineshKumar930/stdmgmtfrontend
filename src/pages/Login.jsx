@@ -6,7 +6,6 @@ const Login = () => {
     username: "",
     password: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -14,37 +13,33 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const response = await fetch("http://localhost:8080/api/admin/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      localStorage.setItem("isAdminLoggedIn", "true");
-      localStorage.setItem("adminUsername", formData.username); // Save username to localStorage
-      alert(data.message);
-      window.location.href = "/";
-    } else {
-      alert(data.message);
+    e.preventDefault();
+    try {
+      const response = await fetch("https://stdmgmtback1.onrender.com/api/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem("isAdminLoggedIn", "true");
+        localStorage.setItem("adminUsername", formData.username);
+        alert(data.message);
+        window.location.href = "/";
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Server error! Please try again.");
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    alert("Server error! Please try again.");
-  }
-};
+  };
 
   return (
     <div className="login-page">
       <div className="login-overlay"></div>
-
       <div className="login-container">
         <div className="login-left">
           <h1>Student Management System</h1>
@@ -54,12 +49,10 @@ const Login = () => {
           </p>
           <div className="login-badge">Admin Access Only</div>
         </div>
-
         <div className="login-right">
           <form className="login-card" onSubmit={handleSubmit}>
             <h2>Admin Login</h2>
             <p className="login-subtitle">Sign in to continue</p>
-
             <div className="input-group">
               <label>Username</label>
               <input
@@ -71,7 +64,6 @@ const Login = () => {
                 required
               />
             </div>
-
             <div className="input-group">
               <label>Password</label>
               <div className="password-wrapper">
@@ -91,11 +83,9 @@ const Login = () => {
                 </span>
               </div>
             </div>
-
             <button type="submit" className="login-btn">
               Login
             </button>
-
             <p className="login-footer-text">
               Secure Admin Portal • React + Spring Boot
             </p>
